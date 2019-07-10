@@ -2,6 +2,148 @@
 // 1부. 문법 재정립
 /***********************************************************/
  
+/*
+#include <stdio.h>  
+
+ int x[4] = {1,2,3,4};
+
+ void main(void)
+ {
+     int *a[4] = {x+3, x+2, x+1, x};
+     
+     printf("%d\n", x[2]);    
+
+             *a[1] = 30;   
+
+     printf("%d\n", x[2]);
+ }
+
+
+*/
+/*
+ #include <stdio.h>
+
+ 
+
+void Swap(char *p,char *q)
+{ 
+	char  temp;
+
+	temp = *p;
+	*p = *q;
+	*q = temp;
+}
+
+ 
+
+void main(void) 
+{
+
+      char * a = "hello"; 
+      char * b = "hi"; 
+
+      printf("Before : %s, %s\n", a, b );
+      Swap(&a,&b); 
+      printf("After : %s, %s\n", a, b );
+
+}
+*/
+/*
+#include <stdio.h> 
+
+
+ // func 함수의 parameter를 완성하라 
+
+
+void func(int *p)
+ {
+      // main의 a[2]를 50으로 만드는 코드를 설계하라
+
+      *(p+2)  = 50;
+ }
+
+ void main(void)
+ {
+   int a[4] = {10,20,30,40};
+
+   printf("%d\n", a[2]); 
+   func(&a);
+   printf("%d\n", a[2]);
+ }
+*/
+/*
+ #include <stdio.h> 
+  
+ struct math
+ {
+  int id;
+  char name[20];
+  int score;
+ };
+
+ void cheat(struct math * test);
+
+ void main(void)
+ {
+  struct math final={1, "Kim", 50};
+  cheat(&final);
+  printf("%d\n", final.score);
+ }
+
+
+ // 함수에서 score를 100으로 수정하는 코드를 작성하라 
+// 단, -> 연산자는 사용할 수 없다 
+
+
+void cheat(struct math * test) 
+ {
+	 (*test).score = 100;
+ }
+*/
+
+/*
+#include <stdio.h>
+
+unsigned int str_lenth(char * d)
+
+{
+	int cnt = 0;
+	int i=0;
+	while(d[i++]) cnt++;
+	return cnt;
+}
+
+void main(void)
+
+{
+
+      char a[ ] = "Willtek";
+
+      printf("%d\n", sizeof(a));
+      printf("%d\n", str_lenth(a));
+
+}
+*/
+/*
+#include <stdio.h>
+
+void str_add(char * d, const char * s)
+
+{
+
+} 
+
+void main(void)
+
+{
+      char a[15] = "Willtek";
+      char b[15] = " Corp.";
+
+      str_add(a, b);
+
+      printf("%s\n", a);
+}
+*/
 /***********************************************************/
 // [1-1-1] : 음수의 메모리 표현
 /***********************************************************/
@@ -1112,7 +1254,7 @@ void main(void)
 // [2-2-2] : 함수의 리턴 타입
 /**********************************************************/
 
-#if 1
+#if 0
 
 #include <stdio.h>
 
@@ -1432,7 +1574,7 @@ void main(void)
 
 #include <stdio.h> 
 
-void func(           p          )
+void func(int (*p)[4])
 {
 	// main의 a[2]를 50으로
 
@@ -1567,7 +1709,8 @@ void main(void)
 
 void cheat(struct math * test)
 {
-			 = 100;
+	(*test).score = 100;
+	test->score = 100;
 }
 
 #endif
@@ -1626,7 +1769,7 @@ void main(void)
 
 #include <stdio.h>
 
-void draw_pixel(int y, int x, int value,      p     )
+void draw_pixel(int y, int x, int value,      p)
 {
 	p[y][x] = value;
 }
@@ -1636,7 +1779,7 @@ void main(void)
 	int a[2][3] = {1,2,3,4,5,6};
 
 	printf("%d\n", a[1][2]);
-	draw_pixel(1, 2, 10, a);
+	draw_pixel(1, 2, 10, a); // a==&a[0] , -> a주소:int(*)[3]
 	printf("%d\n", a[1][2]);
 }
 
@@ -1650,15 +1793,15 @@ void main(void)
 
 #include <stdio.h>
 
-       func(void)
+int (*func(void))[4]
 {
 	static int a[3][4] = {1,2,3,4,5,6,7,8,9,10,11,12};
-	return a;
+	return a; // a=&a[0], -> a주소:int (*)[4]
 }
 
 void main(void)
 {
-	printf("%d\n",     func()        );
+	printf("%d\n", func()[1][2]);//a[1][2] -> func() -- a 대치가능(리턴 a)
 }
 
 #endif
@@ -1732,17 +1875,23 @@ void main(void)
 
 #include <stdio.h>
 
-int a[3][4] = {1,2,3,4,5,6,7,8,9,10,11,12};
-
-int func(void * p, int a, int x)
-{
-	int (*q)[4] = p;
-	return (a+4)[q[x-1]];
-}
-
 void main(void)
 {
-	printf("%d\n", func(a, 1, 2));
+	int a[12] = {10,20,30,40,50,60,70,80,11,22,33,44};
+
+	int *p = a;
+	char *q = (char *)a;
+	int (*r)[4] = (int (*)[4])a;
+	int (*s)[3] = (int (*)[3])a;
+	int (*t)[2][3] = (int (*)[2][3])a;
+
+
+
+	printf("%d, %d\n", p[0], p[1]);
+	printf("%d, %d\n", q[0], q[1]);
+	printf("%#.8x, %#.8x\n", r[0], r[1]);
+	printf("%#.8x, %#.8x\n", s[0], s[1]);
+	printf("%#.8x, %#.8x\n", t[0], t[1]);
 }
 
 #endif
@@ -1760,10 +1909,10 @@ int *b[3] = {a[2], a[1], a[0]};
 
 void main(void)
 {
-	printf("%d\n", 	a[2][3]);
+	printf("%d\n", a[2][3]);
 	
 	//b를 이용하여 배열내의 숫자 12을 인쇄하시오
-	printf("%d\n", 			);
+	printf("%d\n", b[0][3]); // b[0][3] / b[1][7] / b[2][11]
 }
 
 #endif
@@ -1784,7 +1933,7 @@ void main(void)
 	printf("%d\n", 	a[2][3]);
 	
 	//p 변수만 이용하여 배열내의 숫자 12을 인쇄하시오
-	printf("%d\n", 			);
+	printf("%d\n", p[11]);
 }
 
 #endif
@@ -1797,46 +1946,46 @@ void main(void)
 
 #include <stdio.h>
 
-int a[2][3][4] = {{{1,2,3,4},{5,6,7,8},{9,10,11,12}},{{10,20,30,40},{50,60,70,80},{90,100,110,120}}};
+int a[2][3][4] = {{{1,2,3,4},{5,6,7,8},{9,10,11,12}},{{10,20,30,40},{50,60,70,80},{90,100,110,120}}}; // a[1][2][1]
 
-void f1(               ) 
+void f1(int (*p)[3][4])  //*p
 {
-	printf("%d\n",                 );
+	printf("%d\n", p[1][1][1]); //p[17]
 }
 
-void f2(               )  
+void f2(int (*p)[3][4])  //int (*p)[4]
 {
-	printf("%d\n",                 );
+	printf("%d\n", p[-1][2][1]);//p[2-3][1] / p[2][1-12]
 }
 
-void f3(               ) 
+void f3(int (*p)[3][4]) 
 {
-	printf("%d\n",                 );
+	printf("%d\n", p[1][2][1] );
 }
 
-void f4(               ) 
+void f4(int (*p)[3][4]) 
 {
-	printf("%d\n",                 );
+	printf("%d\n", (p-3)[1][2][1]);
 }
 
-void f5(               ) 
+void f5(int *(*p)[3][4]) // 
 {
-	printf("%d\n",                 );
+	printf("%d\n",p[1][2][1]); // (*p)[1][2][1]
 }
 
-void f6(               ) 
+void f6(int *(*p)[4]) 
 {
-	printf("%d\n",         );
+	printf("%d\n", p[2][2]); // p[1][1][2][1]
 }
 
 void main(void)
 {
-	f1(*(a[0]+1));  
-	f2(*(a+2));
-	f3(a);
-	f4(a+3);
-	f5(&a);
-	f6(&a-1);
+	f1(*(a[0]+1));  // a[0][1] -> type :int *
+	f2(*(a+2)); // a[2] -> type :int (*)[4]
+	f3(a); //  -> type :int (*)[3][4]
+	f4(a+3); //a[3] -> type :int (*)[3][4]
+	f5(&a); // -> type :int (*)[2][3][4]
+	f6(&a-1);//-> type :int (*)[2][3][4]
 }
 
 #endif
@@ -1939,7 +2088,7 @@ int * f2(void)
 
 void main(void)
 {
-	// p, q, r 선언
+	int p, q, r;// p, q, r 선언
 
 	// p, q, r에 대응 함수 대입
 
@@ -1948,8 +2097,6 @@ void main(void)
 	printf("%d\n", f2()[2]);
 
 	// 위와 동일한 결과가 나오도록 p, q, r로 실행
-
-
 
 }
 
@@ -1973,7 +2120,7 @@ int sub(int a, int b)
 	return a-b;
 }
 
-void func(                  )
+void func(int (*p)(int, int))
 {
 	printf("%d\n", p(3,4));
 }
@@ -1990,7 +2137,7 @@ void main(void)
 // [2-5-3] : Parameter 미지정형
 /***********************************************************/
 
-#if 0
+#if 1
 
 #include <stdio.h> 
 
@@ -2011,7 +2158,7 @@ int func(void)
 
 // add, sqr, func에 공통적인 함수 등가포인터 p 설계
 
-
+int (*p)();
 void main(void)
 {
 	p = add;
@@ -2029,7 +2176,7 @@ void main(void)
 /***********************************************************/
 // [2-5-4] : 조건에 따른 함수 호출 엔진
 /***********************************************************/
-
+ 
 #if 0
 
 #include <stdio.h> 
@@ -2107,7 +2254,7 @@ int get_key(void)
 	return rand() % 3;
 }
 
-       fa[3]        = {add, sub, mul};
+int (*fa[3])(int a,int b)  = {add, sub, mul};
 
 int op(int a, int b)
 {
@@ -2131,7 +2278,7 @@ void main(void)
 // [2-5-6] : 함수를 받고 함수를 리턴하는 함수
 /***********************************************************/
 
-#if 0
+#if 1
 
 #include <stdio.h> 
 #include <stdlib.h> 
