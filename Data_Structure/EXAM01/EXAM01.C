@@ -110,9 +110,12 @@ int Print_Data(int no)
 
 int Count_Data(void)
 {
-	//모든 자료 비었음
-	//빈 자료임, 이후 모든 자료 비었음
-	//저장된 자료의 개수
+	int i;
+	if(exam[0].id == 0) return 0;//모든 자료 비었음
+		for(i=0;i<MAX_ST;i++){
+			if(exam[i].id ==0) break;//빈 자료임, 이후 모든 자료 비었음
+		}
+	return i;//저장된 자료의 개수
 }
 
 #endif
@@ -121,17 +124,18 @@ int Count_Data(void)
 // [1-1.5] 배열에 데이터 하나를 생성
 /***********************************************************/
 
-#if 0
+#if 1
 
 int Create_Data(SCORE * p)
 {
-
-
-
-
-
-
+	printf("사번을 입력하시오 => ");
+	scanf("%d", &p->id);
+	printf("이름을 입력하시오 => ");
+	scanf("%s", p->name);
+	printf("점수를 입력하시오 => ");
+	scanf("%d", &p->jumsu);
 	return 1;
+
 }
 
 #endif
@@ -157,19 +161,20 @@ void main(void)
 // [1-1.6] 데이터 하나를 생성하여 배열에 추가로 저장하는 함수
 /***********************************************************/
 
-#if 0
+#if 1
 
 int Insert_Data(SCORE * p)
 {
-
-
-//동일 사번 존재
-
-//빈 요소 찾기 성공, 이 장소에 저장
-
-//저장한 요소 번호 리턴
-
-//저장 공간 없음
+	int i;
+	for(i=0;i<MAX_ST;i++){
+		if(exam[i].id == p->id) return -2;//동일 사번 존재
+		if(exam[i].id == 0)
+		{//빈 요소 찾기 성공, 이 장소에 저장
+			exam[i]=*p;
+			return i;//저장한 요소 번호 리턴
+		}
+	}
+	return -1;//저장 공간 없음
 
 }
 
@@ -196,12 +201,23 @@ void main(void)
 // [1-1.7] 지정한 사번의 데이터 삭제 기능을 수행하는 함수
 /***********************************************************/
 
-#if 0
+#if 1
 
  int Delete_Data(int id)
 {
 
-//저장된 자료 없음
+	int i,j;
+	if (exam[0].id == 0) return -2;//저장된 자료 없음
+	for(i=0; i<MAX_ST;i++){
+		if(exam[i].id == id){
+			for(j=i+1;j<MAX_ST;j++){
+				if(exam[j].id == 0) break;
+				exam[j-1] = exam[j];
+			}
+		}
+
+				
+	}
 
 //지울 사번 찾았음
 //뒤 요소값 복사해오기
@@ -752,6 +768,30 @@ void main(void)
 /***********************************************************/
 
 #if 0
+
+int quicksort(SCORE *d, int order, int m, int n, int (*comp)(SCORE * x, SCORE * y))
+{
+	int i, t, p = n;
+	SCORE tmp;
+	if(m>=n) return; //탈출조건(종료조건)
+	for(i = t = m;i < n; i++)
+	{
+		if(comp(&d[p], &d[i]) * order > 0)
+		{//위배되면 기준(t)과 i(위배된 요소)를 swap, t++
+			tmp = d[i];
+			d[i] = d[t];
+			d[t] = tmp;
+		}
+	}
+	//기준(t)와 피봇(p) swap
+	tmp = d[t];
+	d[t] = d[p];
+	d[p] = tmp;
+	//m~t-1 분할정렬
+	qicksort(d, order, m, t-1, comp);
+	//t+1~n 분할정렬
+	qicksort(d, order, t+1, n, comp);
+}
 
 int Sort_Quick(SCORE *d, int order, int m, int n, int (*comp)(SCORE * x, SCORE * y))
 {
