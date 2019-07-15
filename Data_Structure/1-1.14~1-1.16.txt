@@ -1,0 +1,47 @@
+/***********************************************************/
+// [1-1.14] 지정한 데이터를 구조체에 복사하여 주는 함수를 
+/***********************************************************/
+#if 01
+int Copy_Data(int n, SCORE * p)
+{
+	if ((unsigned int)n >= MAX_ST) return -1;//요소번호가 범위 벗어남
+	if (exam[n].id == 0) return -1;//해당 자리 비었음
+	*p = exam[n];
+	return 0;
+}
+#endif
+
+/***********************************************************/
+// [1-1.15] 지정한 수 만큼 자료를 주어진 buffer에서 꺼내어 인쇄하는 함수
+/***********************************************************/
+#if 01
+int Print_All_Buffer(SCORE * d, int max)
+{
+	int i;
+	if (max > MAX_ST) max = MAX_ST;
+	for (i = 0; i < max; i++)
+	{
+		if (d[i].id == 0) break;
+		printf("[%d] ID=%d, NAME=%s, SCORE=%d\n", 
+			i, d[i].id, d[i].name, d[i].jumsu);
+	}
+	return i;
+}
+#endif
+
+/***********************************************************/
+// [1-1.16] 주어진 수 만큼의 자료를 전달받은 buffer에 복사하여 주는 함수
+/***********************************************************/
+#if 01
+int Copy_All_Data(SCORE * p, int max)
+{
+	int i;
+	if (max > MAX_ST) max = MAX_ST;
+	for (i = 0; i < max; i++)
+	{
+		if (exam[i].id == 0) break;
+		p[i] = exam[i];
+	}
+	return i;
+}
+#endif

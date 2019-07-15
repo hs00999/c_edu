@@ -1,0 +1,160 @@
+/***********************************************************/
+// [1-1.2] 배열의 모든 자료 인쇄
+/***********************************************************/
+#if 01
+int Print_All_Data(void)
+{
+	int i;
+	//if (exam[0].id == 0) return 0;//모든 자료 비었음
+	for (i = 0; i < MAX_ST; i++)
+	{
+		if (exam[i].id == 0) break;//빈 자료임, 이후 모든 자료 비었음
+		printf("[%d] ID=%d, NAME=%s, SCORE=%d\n", 
+			i, exam[i].id, exam[i].name, exam[i].jumsu);
+	}
+	return i;//저장된 자료의 개수
+}
+#endif
+/***********************************************************/
+// [1-1.3] 특정 요소번호의 데이터만 인쇄
+/***********************************************************/
+#if 01
+int Print_Data(int no)
+{
+	if ((unsigned int)no >= MAX_ST) return -1;//배열 범위 벗어남
+	if (exam[no].id == 0) return -1;//해당 자료 비었음, 실패
+	printf("ID=%d, NAME=%s, SCORE=%d\n", 
+		exam[no].id, exam[no].name, exam[no].jumsu);
+	return 1;//성공
+}
+#endif
+/***********************************************************/
+// [1-1.4] 배열에 있는 모든 자료의 수를 계산
+/***********************************************************/
+#if 01
+int Count_Data(void)
+{
+	int i;
+	//if (exam[0].id == 0) return 0;//모든 자료 비었음
+	for (i = 0; i < MAX_ST; i++)
+	{
+		if (exam[i].id == 0) break;//빈 자료임, 이후 모든 자료 비었음
+	}
+	return i;//저장된 자료의 개수
+}
+#endif
+/***********************************************************/
+// [1-1.5] 배열에 데이터 하나를 생성
+/***********************************************************/
+#if 01
+int Create_Data(SCORE * p)
+{
+	printf("사번을 입력하시오 => ");
+	scanf("%d", &p->id);
+	printf("이름을 입력하시오 => ");
+	scanf("%s", p->name);
+	printf("점수를 입력하시오 => ");
+	scanf("%d", &p->jumsu);
+	return 1;
+}
+#endif
+
+/***********************************************************/
+// [1-1.6] 데이터 하나를 생성하여 배열에 추가로 저장하는 함수
+/***********************************************************/
+#if 01
+int Insert_Data(SCORE * p)
+{
+	int i;
+	for (i = 0; i < MAX_ST; i++)
+	{
+		if (exam[i].id == p->id) return -2;//동일 사번 존재
+		if (exam[i].id == 0)
+		{//빈 요소 찾기 성공, 이 장소에 저장
+			exam[i] = *p;
+			return i;//저장한 요소 번호 리턴
+		}
+	}
+	return -1;//저장 공간 없음
+}
+#endif
+
+/***********************************************************/
+// [1-1.7] 지정한 사번의 데이터 삭제 기능을 수행하는 함수
+/***********************************************************/
+#if 01
+int Delete_Data(int id)
+{
+	int i, j;
+	if (exam[0].id == 0) return -2;//저장된 자료 없음
+	for (i = 0; i < MAX_ST; i++)
+	{
+		if (exam[i].id == id)
+		{//지울 사번 찾았음
+			for (j = i; j < MAX_ST - 1; j++)
+			{//뒤 요소값 복사해오기
+				exam[j] = exam[j + 1];
+				if (exam[j].id == 0) break;//복사해온 자료 사번이 0이면 정지
+			}
+			if (j == MAX_ST - 1)
+			{//마지막 요소는 복사를 못해왔으므로 지워야 함
+				exam[j].id = 0;
+			}
+			return i;//지운 자료 요소번호 리턴
+		}
+		if (exam[i].id == 0) break;
+	}
+	return -1;//찾는 사번 존재하지 않음
+}
+#endif
+
+/***********************************************************/
+// [1-1.8] 모든 멤버가 일치하는 데이터를 탐색하는 함수
+/***********************************************************/
+#if 01
+int Search_Complete_Data(SCORE * p)
+{
+	int i;
+	if (exam[0].id == 0) return -2;
+	for (i = 0; i < MAX_ST; i++)
+	{
+		if (exam[i].id == 0) break;
+		//if (memcmp(&exam[i], p, sizeof(exam[0])) == 0) return i;//padding도 똑같다는 확신이 있을 경우 사용
+		if ((exam[i].id == p->id) && (exam[i].jumsu == p->jumsu) &&
+			(strcmp(exam[i].name, p->name) == 0))
+		{
+			return i;
+		}
+	}
+	return -1;
+}
+#endif
+
+/***********************************************************/
+// [1-1.9] 원하는 멤버를 갖는 데이터를 탐색하는 함수, 비교를 위한 call back 함수도 설계
+/***********************************************************/
+#if 01
+int Search_Data(int n, SCORE * p, int (*comp)(SCORE * x, SCORE* y))
+{
+	int i;
+	if (exam[0].id == 0) return -2;
+	for (i = n; i < MAX_ST; i++)
+	{
+		if (exam[i].id == 0) break;
+		if (comp(p, &exam[i]) == 0) return i;
+	}
+	return -1;
+}
+int Compare_Id(SCORE * x, SCORE* y)
+{
+	return x->id - y->id;
+}
+int Compare_Name(SCORE * x, SCORE* y)
+{
+	return strcmp(x->name, y->name);
+}
+int Compare_Jumsu(SCORE * x, SCORE* y)
+{
+	return x->jumsu - y->jumsu;
+}
+#endif
