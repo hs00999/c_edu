@@ -1,0 +1,62 @@
+/***********************************************************/
+// [1-4.3] link에 따라서 각 노드의 정보를 인쇄하는 함수
+/***********************************************************/
+/***********************************************************/
+// [1-4.4] link에 따라서 주어진 사번에 맞는 노드 를 찾아 주소를 리턴하는 함수
+/***********************************************************/
+#if 01
+int Print_All_Node(SCORE * head)
+{
+	Print_All_Id_Node(head);
+	return Print_All_Jumsu_Node(head);
+}
+int Print_All_Id_Node(SCORE * head)
+{
+	int n = 0;
+	printf("Head.nid=%#.8x\n", head->nid);
+	for (;;)
+	{
+		head = head->nid;
+		if (head == NULL) break;
+		printf("addr=%#.8x, ID=%d, NAME=%s, SCORE=%d, nid=%#.8x\n",
+			head, head->id, head->name, head->jumsu, head->nid);
+		n++;
+	}
+	return n;
+}
+int Print_All_Jumsu_Node(SCORE * head)
+{
+	int n = 0;
+	printf("Head.njumsu=%#.8x\n", head->njumsu);
+	for (;;)
+	{
+		head = head->njumsu;
+		if (head == NULL) break;
+		printf("addr=%#.8x, ID=%d, NAME=%s, SCORE=%d, njumsu=%#.8x\n",
+			head, head->id, head->name, head->jumsu, head->njumsu);
+		n++;
+	}
+	return n;
+}
+
+SCORE * Search_Id_Node(SCORE * head, int id)
+{
+	for (;;)
+	{
+		head = head->nid;
+		if ((head == NULL) || (head->id > id)) break;//찾기 실패
+		if (head->id == id) return head;//성공
+	}
+	return NULL;
+}
+SCORE * Search_Jumsu_Node(SCORE * head, int jumsu)
+{
+	for (;;)
+	{
+		head = head->njumsu;
+		if ((head == NULL) || (head->jumsu > jumsu)) break;//찾기 실패
+		if (head->jumsu == jumsu) return head;//성공
+	}
+	return NULL;
+}
+#endif

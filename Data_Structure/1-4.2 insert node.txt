@@ -1,0 +1,40 @@
+/***********************************************************/
+// [1-4.2] 데이터 하나를 생성하여 Linked List에 추가하는 함수
+/***********************************************************/
+#if 01
+int Add_Nid(SCORE * head, SCORE * d)
+{
+	int i;
+	for (i = 0; i < MAX_ST; i++)
+	{
+		if ((head->nid == NULL) || (head->nid->id > d->id))
+		{
+			d->nid = head->nid;//추가될 노드에게 주소 전달
+			head->nid = d;//앞 노드가 추가될 노드 가르키게 변경
+			return 1;
+		}
+		if (head->nid->id == d->id)
+		{//동일 사번 존재
+			d->id = 0;
+			return -2;
+		}
+		head = head->nid;
+	}
+	return -1;//저장 공간 없음
+}
+int Insert_Node(SCORE * head, SCORE * d)
+{
+	int r = Add_Nid(head, d);
+	if (r != 1) return r;
+	for (;;)
+	{
+		if ((head->njumsu == NULL) || (head->njumsu->jumsu > d->jumsu))
+		{
+			d->njumsu = head->njumsu;//추가될 노드에게 주소 전달
+			head->njumsu = d;//앞 노드가 추가될 노드 가르키게 변경
+			return 1;
+		}
+		head = head->njumsu;
+	}
+}
+#endif

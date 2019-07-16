@@ -1,0 +1,21 @@
+/***********************************************************/
+// [1-3.8] link에 따라서 주어진 사번의 node를 찾아서 삭제하는 함수
+/***********************************************************/
+#if 01
+int Delete_Node(SCORE * head, int id)
+{
+	int i;
+	for (i = 0; i < MAX_ST; i++)
+	{
+		if ((head->next == NULL) || (head->next->id > id)) break;
+		if (head->next->id == id)
+		{//찾기 성공
+			head->next->id = 0;//지운것 표시
+			head->next = head->next->next;//주소 뺏어오기
+			return 1;
+		}
+		head = head->next;
+	}
+	return -1;//찾기 실패
+}
+#endif

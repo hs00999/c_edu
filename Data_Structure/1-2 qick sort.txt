@@ -1,0 +1,41 @@
+/***********************************************************/
+// [1-2] Quick Sort 함수 설계
+/***********************************************************/
+#if 01
+void qicksort(SCORE *d, int order, int m, int n, int (*comp)(SCORE * x, SCORE * y))
+{
+	int i, t, p = n; 
+	SCORE tmp;
+	if (m >= n) return;//탈출조건(종료조건)
+	for (i = t = m; i < n; i++)
+	{
+		if (comp(&d[p], &d[i]) * order > 0)
+		{//위배되면 기준(t)과 i(위배된 요소)를 swap, t++
+			tmp = d[i];
+			d[i] = d[t];
+			d[t] = tmp;
+			t++;
+		}
+	}
+	//기준(t)와 피봇(p) swap
+	tmp = d[t];
+	d[t] = d[p];
+	d[p] = tmp;
+	//m~t-1 분할 정렬
+	qicksort(d, order, m, t-1, comp);
+	//t+1~n 분할 정렬
+	qicksort(d, order, t+1, n, comp);
+}
+int Sort_Quick(SCORE *d, int order, int m, int n, int (*comp)(SCORE * x, SCORE * y))
+{
+	int i;
+	//d배열 실제 마지막 요소 번호를 찾기
+	for(i = m; i <= n; i++)
+	{
+		if (d[i].id == 0) break;
+	}
+	n = i - 1;//마지막 요소 번호이므로
+	qicksort(d, order, m, n, comp);
+	return n - m + 1;//정렬한 데이터 수
+}
+#endif

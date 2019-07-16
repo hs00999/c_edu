@@ -1,0 +1,88 @@
+/***********************************************************/
+// [1-3.9] 주어진 버퍼에 자료를 모두 복사해 주는 함수 
+/***********************************************************/
+#if 01
+int Copy_All_Node(SCORE * head, SCORE * buf)
+{
+	int i;
+	for (i = 0; i < MAX_ST; i++)
+	{
+		head = head->next;
+		if (head == NULL) break;
+		buf[i] = *head;//내용 복사
+		if (buf[i].next != NULL) buf[i].next = &buf[i+1];
+	}
+	return i;
+}
+#endif
+
+/***********************************************************/
+// [1-3.10] node에서 요청한 자료의 수를 계수하거나 버퍼에 복사해 주는 함수
+/***********************************************************/
+#if 01
+int Count_Name_Node(SCORE * head, char * name)
+{
+	int n = 0;
+	if(head->next == (SCORE *)0x0) return 0;
+	head = head -> next;
+	for(;;)
+	{
+		if(!strcmp(head->name, name)) n++;
+		if(head->next == (SCORE *)0x0) return n;
+		head = head -> next;		
+	}
+}
+
+int Count_Score_Node(SCORE * head, int jumsu)
+{
+	int n = 0;
+	if(head->next == (SCORE *)0x0) return 0;
+	head = head -> next;
+	for(;;)
+	{
+		if(head->jumsu == jumsu) n++;
+		if(head->next == (SCORE *)0x0) return n;
+		head = head -> next;		
+	}
+}
+
+int Copy_Name_Node(SCORE * head, char * name, SCORE * buf)
+{
+	int n = 0;
+	for(;;)
+	{
+		head = head->next;
+		if (head == NULL)
+		{
+			if (n > 0) buf[n-1].next = NULL;
+			return n;
+		}
+		if (strcmp(head->name, name) == 0)
+		{
+			buf[n] = *head;//내용 복사
+			buf[n].next = &buf[n+1];//주소 수정
+			n++;//인덱스 증가
+		}
+	}
+}
+
+int Copy_Score_Node(SCORE * head, int jumsu, SCORE * buf)
+{
+	int n = 0;
+	for(;;)
+	{
+		head = head->next;
+		if (head == NULL)
+		{
+			if (n > 0) buf[n-1].next = NULL;
+			return n;
+		}
+		if (head->jumsu == jumsu)
+		{
+			buf[n] = *head;//내용 복사
+			buf[n].next = &buf[n+1];//주소 수정
+			n++;//인덱스 증가
+		}
+	}
+}
+#endif

@@ -1,0 +1,46 @@
+/***********************************************************/
+// [1-4.7] link에 따라서 주어진 사번의 node를 찾아서 삭제하는 함수
+/***********************************************************/
+#if 01
+int Delete_Id_Node(SCORE * head, int id)
+{
+	SCORE *p = head;
+	for (;;)
+	{
+		if ((p->nid == NULL) || (p->nid->id > id)) break;
+		if (p->nid->id == id)
+		{
+			Delete_One_Jumsu_Node(head, p->nid->jumsu, id);//njumsu 수정
+			p->nid->id = 0;//지운것 표시
+			p->nid = p->nid->nid;//주소 뺏어오기(nid 수정)
+			return 1;
+		}
+		p = p->nid;
+	}
+	return -1;//찾기 실패
+}
+void Delete_One_Jumsu_Node(SCORE * head, int jumsu, int id)
+{
+	for (;;)
+	{
+		if ((head->njumsu->jumsu == jumsu) && (head->njumsu->id == id))
+		{
+			head->njumsu = head->njumsu->njumsu;
+			return;
+		}
+		head = head->njumsu;
+	}
+}
+int Delete_Jumsu_Node(SCORE * head, int jumsu)
+{
+	int r = -1;
+	SCORE *p = head;
+	for (;;)
+	{
+		p = Search_Jumsu_Node(p, jumsu);
+		if (p == NULL) break;
+		r = Delete_Id_Node(head, p->id);
+	}
+	return r;
+}
+#endif

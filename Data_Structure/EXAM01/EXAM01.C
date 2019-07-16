@@ -8,7 +8,7 @@
 /***********************************************************/
 // [1-1.1] 데이터 모델링
 /***********************************************************/
-
+#if 0
 #if 1
 
 #include <stdio.h>
@@ -827,7 +827,7 @@ void main(void)
 }
 
 #endif
-
+#endif
 /***********************************************************/
 // [1-3] 배열 기반 연결 리스트
 /***********************************************************/
@@ -838,7 +838,7 @@ void main(void)
 // [1-3.1] 데이터 모델링
 /***********************************************************/
 
-#if 0
+#if 1
 
 #include <stdio.h>
 #include <string.h>
@@ -853,7 +853,7 @@ typedef struct _score
 	struct _score  * next; 
 }SCORE;
 
-SCORE Head;
+SCORE Head; // 빈노드, 첫번째 리스트 (next만 사용)
 
 #define MAX_ST		20
 
@@ -900,7 +900,7 @@ void Make_Test_Data(int n)
 // [1-3.2] 데이터 생성, 인쇄, 계수 함수 설계
 /***********************************************************/
 
-#if 0
+#if 01
 
 int Create_Data(SCORE * p)
 {
@@ -979,15 +979,28 @@ int Insert_Data(SCORE * p)
 // [1-3.3] 데이터 하나를 생성하여 Linked List에 추가하는 함수
 /***********************************************************/
 
-#if 0
+#if 1
+
 
 int Insert_Node(SCORE * head, SCORE * d)
 {
-
-
-
-
-
+	int i;
+	for (i = 0; i < MAX_ST; i++)
+	{//배열 기반 링크드 리스트 이므로 배열 크기만큼만 체크
+		if ((head->next == NULL) || (head->next->id > d->id))
+		{
+			d->next = head->next;
+			head->next = d;
+			return 1;//성공
+		}
+		if (head->next->id == d->id)
+		{//동일 사번 존재
+			d->id = 0;//다시 사용할 수 있도록 사번 지우기
+			return -2;
+		}
+		head = head->next;
+	}
+	return -1;//저장 공간 없음
 
 }
 
@@ -1018,26 +1031,32 @@ void main(void)
 // [1-3.5] link에 따라서 주어진 사번에 맞는 노드 를 찾아 주소를 리턴하는 함수
 /***********************************************************/
 
-#if 0
-
+#if 01
 int Print_All_Node(SCORE * head)
 {
-
-
-
-
-
+	int i;
+	printf("Head.next = %#.8x\n", head->next);
+	for (i = 0; i < MAX_ST; i++)
+	{
+		head = head->next;
+		if (head == NULL) break;
+		printf("addr=%#.8x, ID=%d, NAME=%s, SCORE=%d, next=%#.8x\n",
+			head, head->id, head->name, head->jumsu, head->next);
+	}
+	return i;
 }
 
 SCORE * Search_Id_Node(SCORE * head, int id)
 {
-
-
-
-
-
+	int i;
+	for (i = 0; i < MAX_ST; i++)
+	{
+		head = head->next;
+		if ((head == NULL) || (head->id > id)) break;//찾기 실패
+		if (head->id == id) return head;//성공
+	}
+	return NULL;
 }
-
 #endif
 
 #if 0
@@ -1077,34 +1096,32 @@ void main(void)
 // [1-3.6] list에 저장된 자료의 총수를 계산하는 함수
 /***********************************************************/
 
-#if 0
-
+#if 01
 int Count_Node(SCORE * head)
 {
-
-
-
-
-
+	int i;
+	for (i = 0; i < MAX_ST; i++)
+	{
+		head = head->next;
+		if (head == NULL) break;
+	}
+	return i;
 }
-
 #endif
 
 /***********************************************************/
 // [1-3.7] link에 따라서 주어진 사번에 맞는 자료를 인쇄하는 함수
 /***********************************************************/
 
-#if 0
-
+#if 01
 int Print_Node(SCORE * head, int id)
 {
-
-
-
-
-
+	head = Search_Id_Node(head, id);
+	if (head == NULL) return -1;//찾기 실패
+	printf("ID=%d, NAME=%s, SCORE=%d, next = 0x%.8X\n", 
+		head->id, head->name, head->jumsu, head->next);
+	return 1;//성공
 }
-
 #endif
 
 #if 0
@@ -1133,15 +1150,22 @@ void main(void)
 // [1-3.8] link에 따라서 주어진 사번의 node를 찾아서 삭제하는 함수
 /***********************************************************/
 
-#if 0
+#if 1
 
 int Delete_Node(SCORE * head, int id)
 {
-
-
-
-
-
+	int i;
+	for(i=0;i<MAX_ST;i++){
+		
+		if((head->next == NULL) || (head->next->id >= id)) break;
+		if(head->next->id == id){//찾기 성공
+			head->next->id = 0;//지운것표시
+			head->next = head->next->next;//주소 뺏어오기
+			return 1;
+		}
+		head = head->next;
+	}
+	return -1;//찾기 실패
 
 }
 
@@ -1178,8 +1202,16 @@ void main(void)
 
 int Copy_All_Node(SCORE * head, SCORE * buf)
 {
+	int i;
+	buf[0] = head->next;
+	for(i=0;i<MAX_ST;i++){
+	head = head->next;
+	if(buf[0] == NULL) buf[0] = head;
+	else buf[i] = buf[i-1];
 
 
+
+	}
 
 
 
@@ -1218,7 +1250,7 @@ void main(void)
 // [1-3.10] node에서 요청한 자료의 수를 계수하거나 버퍼에 복사해 주는 함수
 /***********************************************************/
 
-#if 0
+#if 1
 
 int Count_Name_Node(SCORE * head, char * name)
 {
@@ -1252,16 +1284,40 @@ int Count_Score_Node(SCORE * head, int jumsu)
 
 int Copy_Name_Node(SCORE * head, char * name, SCORE * buf)
 {
-
-
-
+	
+	int n=0;
+	for (;;)
+	{
+		head = head->next;
+		if(head == NULL)
+		{
+			if(n>0) buf[n-1].next = NULL;
+			return 0;
+		}
+		if (!strcmp(head->name, name))
+		{
+			buf[n] = *head; //내용복사
+			buf[n].next = &buf[n+1]; //주소수정
+			n++; //인덱스 증가
+		}
+		
+	}
+	return n;
 
 }
 
 int Copy_Score_Node(SCORE * head, int jumsu, SCORE * buf)
 {
 
-
+	int i;
+	for (i = 0; i < MAX_ST; i++)
+	{
+		head = head->next;
+		if (head == NULL) break;
+		buf[i].jumsu = head->name;//내용 복사
+		if (buf[i].next != NULL) buf[i].next = &buf[i+1];
+	}
+	return i;
 
 
 }
@@ -1314,7 +1370,7 @@ void main(void)
 // [1-4.1] 데이터 모델링
 /***********************************************************/
 
-#if 0
+#if 1
 
 #include <stdio.h>
 #include <string.h>
@@ -1456,15 +1512,42 @@ int Insert_Data(SCORE * p)
 // [1-4.2] 데이터 하나를 생성하여 Linked List에 추가하는 함수
 /***********************************************************/
 
-#if 0
+#if 1
 
+int Add_Nid(SCORE * head, SCORE * d)
+{
+	int i;
+	for (i = 0; i < MAX_ST; i++)
+	{
+		if ((head->nid == NULL) || (head->nid->id > d->id))
+		{
+			d->nid = head->nid;//추가될 노드에게 주소 전달
+			head->nid = d;//앞 노드가 추가될 노드 가르키게 변경
+			return 1;
+		}
+		if (head->nid->id == d->id)
+		{//동일 사번 존재
+			d->id = 0;
+			return -2;
+		}
+		head = head->nid;
+	}
+	return -1;//저장 공간 없음
+}
 int Insert_Node(SCORE * head, SCORE * d)
 {
-
-
-
-
-
+	int r = Add_Nid(head, d);
+	if (r != 1) return r;
+	for (;;)
+	{
+		if ((head->njumsu == NULL) || (head->njumsu->jumsu > d->jumsu))
+		{
+			d->njumsu = head->njumsu;//추가될 노드에게 주소 전달
+			head->njumsu = d;//앞 노드가 추가될 노드 가르키게 변경
+			return 1;
+		}
+		head = head->njumsu;
+	}
 }
 
 #endif
@@ -1494,48 +1577,61 @@ void main(void)
 // [1-4.4] link에 따라서 주어진 사번에 맞는 노드 를 찾아 주소를 리턴하는 함수
 /***********************************************************/
 
-#if 0
-
+#if 01
 int Print_All_Node(SCORE * head)
 {
 	Print_All_Id_Node(head);
 	return Print_All_Jumsu_Node(head);
 }
-
 int Print_All_Id_Node(SCORE * head)
 {
-
-
-
-
-
+	int n = 0;
+	printf("Head.nid=%#.8x\n", head->nid);
+	for (;;)
+	{
+		head = head->nid;
+		if (head == NULL) break;
+		printf("addr=%#.8x, ID=%d, NAME=%s, SCORE=%d, nid=%#.8x\n",
+			head, head->id, head->name, head->jumsu, head->nid);
+		n++;
+	}
+	return n;
 }
-
 int Print_All_Jumsu_Node(SCORE * head)
 {
-
-
-
-
-
+	int n = 0;
+	printf("Head.njumsu=%#.8x\n", head->njumsu);
+	for (;;)
+	{
+		head = head->njumsu;
+		if (head == NULL) break;
+		printf("addr=%#.8x, ID=%d, NAME=%s, SCORE=%d, njumsu=%#.8x\n",
+			head, head->id, head->name, head->jumsu, head->njumsu);
+		n++;
+	}
+	return n;
 }
 
 SCORE * Search_Id_Node(SCORE * head, int id)
 {
-
-
-
-
+	for (;;)
+	{
+		head = head->nid;
+		if ((head == NULL) || (head->id > id)) break;//찾기 실패
+		if (head->id == id) return head;//성공
+	}
+	return NULL;
 }
-
 SCORE * Search_Jumsu_Node(SCORE * head, int jumsu)
 {
-
-
-
-
+	for (;;)
+	{
+		head = head->njumsu;
+		if ((head == NULL) || (head->jumsu > jumsu)) break;//찾기 실패
+		if (head->jumsu == jumsu) return head;//성공
+	}
+	return NULL;
 }
-
 #endif
 
 #if 0
@@ -1666,11 +1762,7 @@ void main(void)
 
 int Delete_Id_Node(SCORE * head, int id)
 {
-
-
-
-
-
+	search
 
 }
 
@@ -1728,7 +1820,7 @@ void main(void)
 // [1-4.8] node에서 요청한 자료의 수를 계수하거나 버퍼에 복사해 주는 함수
 /***********************************************************/
 
-#if 0
+#if 1
 
 int Count_Name_Node(SCORE * head, char * name)
 {
@@ -1762,27 +1854,51 @@ int Count_Score_Node(SCORE * head, int jumsu)
 
 int Copy_Name_Node(SCORE * head, char * name, SCORE * buf)
 {
-
-
-
-
-
-
+	int n=0;
+	
+	for(;;){
+		head = head->nid;	
+		if(head->name == name){
+			buf[n] = *head;
+			buf[n].nid = &buf[n+1];
+			n++;
+	
+		}
+		if(head == NULL)
+		{
+			if(n>0) buf[n-1].nid = NULL;
+			break;
+		}
+	}
+	return n;
 }
 
 int Copy_Score_Node(SCORE * head, int jumsu, SCORE * buf)
 {
-
-
-
-
-
-
+	int n=0;
+	
+	for(;;){
+		head = head->njumsu;	
+		
+		if(head == NULL)
+		{
+			if(n>0) buf[n-1].nid = NULL;
+			break;
+		}
+		if(head->jumsu == jumsu){
+			buf[n] = *head;
+			buf[n].njumsu = &buf[n+1];
+			n++;
+	
+		}
+	}
+	return n;
+	
 }
 
 #endif
 
-#if 0
+#if 1
 
 void main(void)
 {
