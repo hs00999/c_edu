@@ -1,0 +1,25 @@
+int Push_Stack(int data)
+{
+	if (Sptr == STACK_FULL) return -1;//저장 불가
+	Stack[--Sptr] = data;
+	return 1;//저장 성공
+}
+
+int Pop_Stack(int *p)
+{
+	if (Sptr == STACK_EMPTY) return -1;//읽기 불가
+	*p = Stack[Sptr++];
+	return 1;//읽기 성공
+}
+
+int Print_Stack(void)
+{
+	int i;
+
+	for(i = Sptr; i < MAX_STACK; i++)
+	{
+		printf("STACK[%d] = %d\n", i, Stack[i]);
+	}
+
+	return MAX_STACK - Sptr;
+}

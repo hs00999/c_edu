@@ -1,0 +1,27 @@
+/***********************************************************/
+// [1-5.3] 주어진 사번의 node를 찾아서 삭제하는 함수
+/***********************************************************/
+#if 01
+SCORE * Search_Id_Node(SCORE * head, int id)
+{
+	for (;;)
+	{
+		head = head->next;
+		if ((head == NULL) || (head->id > id)) return NULL;//찾기 실패
+		if (head->id == id) return head;//성공
+	}
+}
+
+int Delete_Node(SCORE * head, int id)
+{
+	SCORE *p = Search_Id_Node(head, id);
+	if (p == NULL) return -1;//실패
+	p->prev->next = p->next;//앞 노드 next = 삭제할 노드 next
+	if (p->next != NULL)
+	{
+		p->next->prev = p->prev;//뒷 노드 prev = 삭제할 노드 prev
+	}
+	p->id = 0;//삭제 표시
+	return 1;//성공
+}
+#endif

@@ -1762,7 +1762,11 @@ void main(void)
 
 int Delete_Id_Node(SCORE * head, int id)
 {
-	search
+	SCORE *p = head;
+	for(;;)
+	{
+		if((p->nid == NULL))
+	}
 
 }
 
@@ -1945,7 +1949,7 @@ void main(void)
 // 단, 인쇄할 때 Prev Node 값도 인쇄하도록 추가한다
 /***********************************************************/
 
-#if 0
+#if 1
 
 #include <stdio.h>
 #include <string.h>
@@ -2215,14 +2219,29 @@ int Copy_Score_Node(SCORE * head, int jumsu, SCORE * buf)
 // [1-5.2] 데이터 하나를 생성하여 Linked List에 추가하는 함수
 /***********************************************************/
 
-#if 0
+#if 1
 
 int Insert_Node(SCORE * head, SCORE * d)
 {
-
-
-
-
+	int i;
+	for(i=0; i<MAX_ST ; i++)
+	{
+		if((head->next == NULL) || (head->next->id > d->id))
+		{
+			d->next = head->next;
+			d->prev = head;
+			head->next = d;
+			if(d->next != NULL) d->next->prev = d;
+			return 1;
+		}
+		if(head->next->id == d->id)
+		{
+			d->id = 0;
+			return -2;
+		}
+		head = head->next;
+	}
+	return -1;
 
 }
 
@@ -2250,25 +2269,32 @@ void main(void)
 // [1-5.3] 주어진 사번의 node를 찾아서 삭제하는 함수
 /***********************************************************/
 
-#if 0
+#if 1
 
 SCORE * Search_Id_Node(SCORE * head, int id)
 {
-
-
-
-
+	for (;;)
+	{
+		head = head->next;
+		if ((head == NULL) || (head->id > id)) return NULL;//찾기 실패
+		if (head->id == id) return head;//성공
+	}
 }
 
 int Delete_Node(SCORE * head, int id)
 {
-
-
-
-
+	SCORE *p = Search_Id_Node(head, id);
+	if (p == NULL) return -1;//실패
+	p->prev->next = p->next;//앞 노드 next = 삭제할 노드 next
+	if (p->next != NULL)
+	{
+		p->next->prev = p->prev;//뒷 노드 prev = 삭제살 노드 prev
+	}
+	p->id = 0;//삭제 표시
+	return 1;//성공
 }
-
 #endif
+
 
 #if 0
 
@@ -2300,13 +2326,21 @@ void main(void)
 // [1-5.4] 더블 링크 사용의 장점 1, 내림차순 검색
 /***********************************************************/
 
-#if 0
+#if 1
 
 int Print_All_Node_Reverse(SCORE * head)
 {
 
-
-
+	if(head == NULL) return -1;
+	for(;;){
+		head = head->next;
+		if(head->next == NULL) break;
+	}
+	for(;;){
+		printf("ID=%d, NAME=%s, SCORE=%d, next=0x%.8X, prev=0x%.8X\n", head->id, head->name, head->jumsu, head->next, head->prev);
+		head = head->prev;
+		if(head->prev == NULL) return 1;
+	}
 
 
 }
@@ -2338,31 +2372,37 @@ void main(void)
 // [1-5.5] 더블 링크 사용의 장점 2, 역방향으로 일정 범위 인쇄
 /***********************************************************/
 
-#if 0
+#if 1
 
 int Print_Selected_Node(SCORE * head, int id, int num)
 {
-
-
-
-
-
-
+	int i;
+	SCORE *p = Search_Id_Node(head, id);
+	if(p == NULL) return -1;
+	for(i = 0; i<num ; i++){
+		printf("ID=%d, NAME=%s, SCORE=%d, next=0x%.8X, prev=0x%.8X\n", p->id, p->name, p->jumsu, p->next, p->prev);
+		if(p->next == NULL) return i+1;
+		p = p->next;
+	}return i;
 }
 
 int Print_Selected_Node_Reverse(SCORE *head, int id, int num)
 {
-
-
-
-
+	int  i;
+	SCORE *p = Search_Id_Node(head, id);
+	if(p == NULL) return -1;
+	for(i = 0; i<num ; i++){
+		printf("ID=%d, NAME=%s, SCORE=%d, next=0x%.8X, prev=0x%.8X\n", p->id, p->name, p->jumsu, p->next, p->prev);
+		if(p->prev == NULL) return i+1;
+		p = p->prev;
+	}return 0;
 
 
 }
 
 #endif
 
-#if 0
+#if 1
 
 void main(void)
 {
@@ -2379,16 +2419,16 @@ void main(void)
 	printf("Printed Node Count(Down) = %d\n", Print_All_Node_Reverse(&Head));
 
 	r = Print_Selected_Node(&Head, 7, 3);
-	printf("Printed Data Number => %d\n", r);
+	printf("[a]Printed Data Number => %d\n", r);
 
 	r = Print_Selected_Node(&Head, 19, 3);
-	printf("Printed Data Number => %d\n", r);
+	printf("[b]Printed Data Number => %d\n", r);
 
 	r = Print_Selected_Node_Reverse(&Head, 7, 3);
-	printf("Printed Data Number => %d\n", r);
+	printf("[c]Printed Data Number => %d\n", r);
 
 	r = Print_Selected_Node_Reverse(&Head, 2, 3);
-	printf("Printed Data Number => %d\n", r);
+	printf("[d]Printed Data Number => %d\n", r);
 }
 
 #endif
@@ -2420,16 +2460,19 @@ int Sptr = STACK_EMPTY;
 int Push_Stack(int data)
 {
 
-
-
-
+	if(Sptr == STACK_FULL) return -1;
+	Stack[--Sptr] = data;
+	return 1;
+	
 }
 
 int Pop_Stack(int *p)
 {
+	if(Sptr == STACK_EMPTY) return -1;
+	*p =Stack[Sptr++];
+	Sptr++;
 
-
-
+	return 1;
 
 }
 
@@ -2437,12 +2480,12 @@ int Print_Stack(void)
 {
 	int i;
 
-	for(i = Sptr + 1; i < MAX_STACK; i++)
+	for(i = Sptr; i < MAX_STACK; i++)
 	{
 		printf("STACK[%d] = %d\n", i, Stack[i]);
 	}
 
-	return MAX_STACK - Sptr - 1;
+	return MAX_STACK - Sptr;
 }
 
 int Count_Full_Data_Stack(void)
@@ -2544,16 +2587,26 @@ int Rdptr = Q_EMPTY;
 
 int In_Queue(int data)
 {
-
-
-
-
+	int i,j;
+	if(Wrptr == MAX_Q) 
+	{
+		if(Rdptr == Q_EMPTY) return -1;
+		for(i=Q_EMPTY, j=Rdptr ; j<Wrptr;i++, j--)
+		{
+			Queue[i] = Queue[j];
+		}
+		Rdptr = Q_EMPTY;
+		Wrptr = i;
+	}
+	Queue[Wrptr++] = data;
+	return 1;
 }
 
 int Out_Queue(int *p)
 {
-
-	
+	if(Wrptr == Rdptr) return -1;
+	*p = Queue[Rdptr++];
+	return 1;
 	
 }
 
@@ -2678,19 +2731,19 @@ int Rdptr = Q_MIN;
 
 int In_Queue(int data)
 {
-
-
-
-
+	if(((Wrptr + 1) % MAX_Q) == Rdptr) return -1;
+	Queue[Wrptr] = data;
+	Wrptr = (Wrptr + 1) % MAX_Q;
+	return 1;
 
 }
 
 int Out_Queue(int *p)
 {
-
-
-
-
+	if(Wrptr == Rdptr) return -1;
+	*p = Queue[Rdptr];
+	Rdptr = (Rdptr + 1) % MAX_Q;
+	return 1;
 }
 
 int Print_Queue(void)
@@ -2701,8 +2754,9 @@ int Print_Queue(void)
 
 	for(i=0; i<n; i++)
 	{
-		printf("Queue[%d] = %d\n", rd, Queue[rd++]);
-		rd %= MAX_Q;
+		printf("Queue[%d] = %d\n", rd, Queue[rd]); //printf("Queue[%d] = %d\n", rd, Queue[rd++]); --> 한 줄에 rd / rd++ 같이 넣으면 연산값 어떻게 나올지 모름
+
+		rd = (rd + 1) % MAX_Q;
 	}
 
 	return n; 
@@ -2797,7 +2851,7 @@ void main(void)
 // [2-1] 힙 기반 Linked List
 /***********************************************************/
 
-#if 0
+#if 1
 
 /***********************************************************/
 // [2-1.1] 기존 배열 기반 linked list 방식중 그대로 사용하는 함수들
@@ -2867,14 +2921,14 @@ int Print_All_Node(SCORE * head)
 	int n = 0;
 
 	printf("Head.next = 0x%.8X\n", head->next);
-	if(head->next == (SCORE *)0x0) return 0;
+	if(head->next == (SCORE *)0x0) return 0; //값x
 	head = head -> next;
 
 	for(;;)
 	{
 		printf("addr = 0x%.8X, ID=%d, NAME=%s, SCORE=%d, next = 0x%.8X\n", head, head->id, head->name, head->jumsu, head->next);
 		n++;
-		if(head->next == (SCORE *)0x0) return n;
+		if(head->next == (SCORE *)0x0) return n; // 다음노드없을 때까지 출력
 		head = head -> next;		
 	}
 }
@@ -2989,7 +3043,7 @@ int Copy_Name_Node(SCORE * head, char * name, SCORE * buf)
 
 		if(head->next == (SCORE *)0x0) 
 		{
-			buf[n-1].next = (SCORE *)0x0;
+			if(n>0) buf[n-1].next = (SCORE *)0x0;
 			return n;
 		}
 
@@ -3015,7 +3069,7 @@ int Copy_Score_Node(SCORE * head, int jumsu, SCORE * buf)
 		
 		if(head->next == (SCORE *)0x0) 
 		{
-			buf[n-1].next = (SCORE *)0x0;
+			if(n>0) buf[n-1].next = (SCORE *)0x0;
 			return n;
 		}
 
@@ -3027,16 +3081,28 @@ int Copy_Score_Node(SCORE * head, int jumsu, SCORE * buf)
 // [2-1.2] 전달받은 데이터를 힙에 생성하고 Linked List에 추가하는 함수 (calloc 사용)
 /***********************************************************/
 
-#if 0
+#if 1
 
 int Insert_Node(SCORE * head, SCORE * d)
 {
 
-
-
-
-
-
+	SCORE *p;
+	for(;;)
+	{
+		if((head->next == NULL) ||(head->next->id > d->id))
+		{
+			p = (SCORE*)calloc(1,sizeof(SCORE));
+			if(p == NULL) return -1;
+			*p = *d; // p=d; -> d의 주소 p로 복사 -> 할당받은 의미x (값을 직접 복사해줘야됨)
+			p->next = head->next;
+			head->next = p;
+			return 1;
+		}
+		if(head->next->id == d->id) return -2;
+		head = head->next;
+	}
+	
+	return 1;
 }
 
 #endif
@@ -3076,23 +3142,29 @@ void main(void)
 // [2-1.3] 전달받은 사번의 자료를 링크와 힙에서 삭제하는 함수 (free 사용)
 /***********************************************************/
 
-#if 0
+#if 1
 
 int Delete_Node(SCORE * head, int id)
 {
-
-
-
-
-
-
-
+	SCORE *backup;
+	for(;;)
+	{
+		if((head->next == NULL)||(head->next->id > id)) return -1;
+		if(head->next->id == id)
+		{
+			backup = head->next;
+			head->next = backup->next;
+			free(backup);
+			return 1;
+		}
+		head = head->next;
+	}
 
 }
 
 #endif
 
-#if 0
+#if 1
 
 void main(void)
 {

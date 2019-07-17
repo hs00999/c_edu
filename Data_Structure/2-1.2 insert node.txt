@@ -1,0 +1,23 @@
+/***********************************************************/
+// [2-1.2] 전달받은 데이터를 힙에 생성하고 Linked List에 추가하는 함수 (calloc 사용)
+/***********************************************************/
+#if 01
+int Insert_Node(SCORE * head, SCORE * d)
+{
+	SCORE *p;
+	for (;;)
+	{
+		if ((head->next == NULL) || (head->next->id > d->id))
+		{
+			p = (SCORE *)calloc(1, sizeof(SCORE));
+			if (p == NULL) return -1;//할당 실패, 저장 공간 없음
+			*p = *d;//저장할 자료 복사
+			p->next = head->next;//새 노드 next = 앞 노드 next
+			head->next = p;//앞 노드 next = 새 노드 주소
+			return 1;//성공
+		}
+		if (head->next->id == d->id) return -2;//동일 사번 존재
+		head = head->next;
+	}
+}
+#endif

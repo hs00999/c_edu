@@ -1,0 +1,27 @@
+/***********************************************************/
+// [1-5.2] 데이터 하나를 생성하여 Linked List에 추가하는 함수
+/***********************************************************/
+#if 01
+int Insert_Node(SCORE * head, SCORE * d)
+{
+	int i;
+	for (i = 0; i < MAX_ST; i++)
+	{
+		if ((head->next == NULL) || (head->next->id > d->id))
+		{
+			d->next = head->next;
+			d->prev = head;
+			head->next = d;
+			if (d->next != NULL) d->next->prev = d;
+			return 1;//성공
+		}
+		if (head->next->id == d->id)
+		{
+			d->id = 0;//재사용 가능하도록 사번 0으로 변경
+			return -2;//동일사번존재
+		}
+		head = head->next;
+	}
+	return -1;//저장공간없음
+}
+#endif

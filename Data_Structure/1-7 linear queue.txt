@@ -1,0 +1,23 @@
+int In_Queue(int data)
+{
+	int d, s;
+	if (Wrptr == Q_FULL)
+	{
+		if (Rdptr == Q_EMPTY) return -1;//저장 실패(빈 공간 없음)
+		for (d = Q_EMPTY, s = Rdptr; s < Wrptr; d++, s++)
+		{
+			Queue[d] = Queue[s];
+		}
+		Rdptr = Q_EMPTY;
+		Wrptr = d;
+	}
+	Queue[Wrptr++] = data;//저장하고 주소(인덱스) 증가
+	return 1;//저장 성공
+}
+
+int Out_Queue(int *p)
+{
+	if (Rdptr == Wrptr) return -1;//읽기 실패
+	*p = Queue[Rdptr++];//읽고 주소(인덱스) 증가
+	return 1;//읽기 성공
+}

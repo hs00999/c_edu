@@ -1,0 +1,20 @@
+/***********************************************************/
+// [1-5.4] 더블 링크 사용의 장점 1, 내림차순 검색
+/***********************************************************/
+#if 01
+int Print_All_Node_Reverse(SCORE * head)
+{
+	int n = 0;
+	printf("Head.next = 0x%p Head.prev = 0x%p\n", head->next, head->prev);
+	for (; head->next != NULL; head = head->next);//마지막 노드까지 탐색
+	printf("Tail.next = 0x%p Tail.prev = 0x%p\n", head->next, head->prev);
+	for (;;)
+	{
+		if (head->prev == NULL) return n;
+		printf("addr = 0x%p, ID=%d, NAME=%s, SCORE=%d, next=0x%p, prev=0x%p\n",
+			head, head->id, head->name, head->jumsu, head->next, head->prev);
+		n++;
+		head = head->prev;
+	}
+}
+#endif

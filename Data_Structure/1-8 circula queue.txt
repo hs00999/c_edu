@@ -1,0 +1,30 @@
+int In_Queue(int data)
+{
+	if (((Wrptr + 1) % MAX_Q) == Rdptr) return -1;//저장 실패
+	Queue[Wrptr] = data;
+	Wrptr = (Wrptr + 1) % MAX_Q;
+	return 1;//저장 성공
+}
+
+int Out_Queue(int *p)
+{
+	if (Rdptr == Wrptr) return -1;//읽기 실패
+	*p = Queue[Rdptr];
+	Rdptr = (Rdptr + 1) % MAX_Q;
+	return 1;//읽기 성공
+}
+
+int Print_Queue(void)
+{
+	int i;
+	int rd = Rdptr;
+	int n = Count_Full_Data_Queue();
+
+	for(i=0; i<n; i++)
+	{
+		printf("Queue[%d] = %d\n", rd, Queue[rd]);
+		rd = (rd + 1) % MAX_Q;
+	}
+
+	return n; 
+}
