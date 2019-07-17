@@ -9,7 +9,7 @@
 // [1-1.1] 데이터 모델링
 /***********************************************************/
 #if 0
-#if 1
+#if 0
 
 #include <stdio.h>
 #include <string.h>
@@ -68,7 +68,7 @@ void Make_Test_Data(int n)
 // [1-1.2] 배열의 모든 자료 인쇄
 /***********************************************************/
 
-#if 1
+#if 0
 
 int Print_All_Data(void)
 {
@@ -89,7 +89,7 @@ int Print_All_Data(void)
 // [1-1.3] 특정 요소번호의 데이터만 인쇄
 /***********************************************************/
 
-#if 1
+#if 0
 
 int Print_Data(int no)
 {
@@ -106,7 +106,7 @@ int Print_Data(int no)
 // [1-1.4] 배열에 있는 모든 자료의 수를 계산
 /***********************************************************/
 
-#if 1
+#if 0
 
 int Count_Data(void)
 {
@@ -124,7 +124,7 @@ int Count_Data(void)
 // [1-1.5] 배열에 데이터 하나를 생성
 /***********************************************************/
 
-#if 1
+#if 0
 
 int Create_Data(SCORE * p)
 {
@@ -161,7 +161,7 @@ void main(void)
 // [1-1.6] 데이터 하나를 생성하여 배열에 추가로 저장하는 함수
 /***********************************************************/
 
-#if 1
+#if 0
 
 int Insert_Data(SCORE * p)
 {
@@ -201,7 +201,7 @@ void main(void)
 // [1-1.7] 지정한 사번의 데이터 삭제 기능을 수행하는 함수
 /***********************************************************/
 
-#if 1
+#if 0
 
  int Delete_Data(int id)
 {
@@ -297,7 +297,7 @@ void main(void)
 // [1-1.9] 원하는 멤버를 갖는 데이터를 탐색하는 함수, 비교를 위한 call back 함수도 설계
 /***********************************************************/
 
-#if 1
+#if 0
 
 int Search_Data(int n, SCORE * p, int (*comp)(SCORE * x, SCORE* y))
 {
@@ -437,7 +437,7 @@ void main(void)
 // [1-1.11] 자료를 선택 정렬로 정렬하는 함수
 /***********************************************************/
 
-#if 1
+#if 0
 
 int Sort_Select(SCORE * d, int order, int (*comp)(SCORE * x, SCORE * y))
 {
@@ -472,7 +472,7 @@ int Sort_Select(SCORE * d, int order, int (*comp)(SCORE * x, SCORE * y))
 
 #endif
 
-#if 1
+#if 0
 
 void main(void)
 {
@@ -521,7 +521,7 @@ void main(void)
 // [1-1.12] 자료를 삽입 정렬로 정렬하는 함수
 /***********************************************************/
 
-#if 1
+#if 0
 
 int Sort_Insertion(SCORE * d, int order, int (*comp)(SCORE * x, SCORE * y))
 {
@@ -530,11 +530,12 @@ int Sort_Insertion(SCORE * d, int order, int (*comp)(SCORE * x, SCORE * y))
 
 #endif
 
-#if 1
+#if 0
 
 void main(void)
 {
-	#if 1
+	#if 0
+
 
 	SCORE tmp;
 
@@ -548,7 +549,7 @@ void main(void)
 
 	#endif 
 
-	#if 1
+	#if 0
 
 	Make_Test_Data(8);
 	printf("Printed Data Count = %d\n", Print_All_Data());
@@ -579,7 +580,7 @@ void main(void)
 // [1-1.13] 사번순 정렬을 유지하면서 데이터를 배열에 추가하는 함수
 /***********************************************************/
 
-#if 1
+#if 0
 
 int Insert_and_Sort_Data(SCORE * p)
 {
@@ -617,7 +618,7 @@ int Insert_and_Sort_Data(SCORE * p)
 
 #endif
 
-#if 1
+#if 0
 
 void main(void)
 {
@@ -641,7 +642,7 @@ void main(void)
 // [1-1.14] 지정한 데이터를 구조체에 복사하여 주는 함수를 
 /***********************************************************/
 
-#if 1
+#if 0
 
 int Copy_Data(int n, SCORE * p)
 {
@@ -712,7 +713,7 @@ void main(void)
 // [1-1.16] 주어진 수 만큼의 자료를 전달받은 buffer에 복사하여 주는 함수
 /***********************************************************/
 
-#if 1
+#if 0
 
 int Copy_All_Data(SCORE * p, int max)
 {
@@ -838,7 +839,7 @@ void main(void)
 // [1-3.1] 데이터 모델링
 /***********************************************************/
 
-#if 1
+#if 0
 
 #include <stdio.h>
 #include <string.h>
@@ -979,7 +980,7 @@ int Insert_Data(SCORE * p)
 // [1-3.3] 데이터 하나를 생성하여 Linked List에 추가하는 함수
 /***********************************************************/
 
-#if 1
+#if 0
 
 
 int Insert_Node(SCORE * head, SCORE * d)
@@ -1150,7 +1151,7 @@ void main(void)
 // [1-3.8] link에 따라서 주어진 사번의 node를 찾아서 삭제하는 함수
 /***********************************************************/
 
-#if 1
+#if 0
 
 int Delete_Node(SCORE * head, int id)
 {
@@ -1250,7 +1251,7 @@ void main(void)
 // [1-3.10] node에서 요청한 자료의 수를 계수하거나 버퍼에 복사해 주는 함수
 /***********************************************************/
 
-#if 1
+#if 0
 
 int Count_Name_Node(SCORE * head, char * name)
 {
@@ -1370,7 +1371,7 @@ void main(void)
 // [1-4.1] 데이터 모델링
 /***********************************************************/
 
-#if 1
+#if 0
 
 #include <stdio.h>
 #include <string.h>
@@ -1512,7 +1513,7 @@ int Insert_Data(SCORE * p)
 // [1-4.2] 데이터 하나를 생성하여 Linked List에 추가하는 함수
 /***********************************************************/
 
-#if 1
+#if 0
 
 int Add_Nid(SCORE * head, SCORE * d)
 {
@@ -1824,7 +1825,7 @@ void main(void)
 // [1-4.8] node에서 요청한 자료의 수를 계수하거나 버퍼에 복사해 주는 함수
 /***********************************************************/
 
-#if 1
+#if 0
 
 int Count_Name_Node(SCORE * head, char * name)
 {
@@ -1902,7 +1903,7 @@ int Copy_Score_Node(SCORE * head, int jumsu, SCORE * buf)
 
 #endif
 
-#if 1
+#if 0
 
 void main(void)
 {
@@ -1949,7 +1950,7 @@ void main(void)
 // 단, 인쇄할 때 Prev Node 값도 인쇄하도록 추가한다
 /***********************************************************/
 
-#if 1
+#if 0
 
 #include <stdio.h>
 #include <string.h>
@@ -2219,7 +2220,7 @@ int Copy_Score_Node(SCORE * head, int jumsu, SCORE * buf)
 // [1-5.2] 데이터 하나를 생성하여 Linked List에 추가하는 함수
 /***********************************************************/
 
-#if 1
+#if 0
 
 int Insert_Node(SCORE * head, SCORE * d)
 {
@@ -2269,7 +2270,7 @@ void main(void)
 // [1-5.3] 주어진 사번의 node를 찾아서 삭제하는 함수
 /***********************************************************/
 
-#if 1
+#if 0
 
 SCORE * Search_Id_Node(SCORE * head, int id)
 {
@@ -2326,7 +2327,7 @@ void main(void)
 // [1-5.4] 더블 링크 사용의 장점 1, 내림차순 검색
 /***********************************************************/
 
-#if 1
+#if 0
 
 int Print_All_Node_Reverse(SCORE * head)
 {
@@ -2372,7 +2373,7 @@ void main(void)
 // [1-5.5] 더블 링크 사용의 장점 2, 역방향으로 일정 범위 인쇄
 /***********************************************************/
 
-#if 1
+#if 0
 
 int Print_Selected_Node(SCORE * head, int id, int num)
 {
@@ -2402,7 +2403,7 @@ int Print_Selected_Node_Reverse(SCORE *head, int id, int num)
 
 #endif
 
-#if 1
+#if 0
 
 void main(void)
 {
@@ -2851,7 +2852,7 @@ void main(void)
 // [2-1] 힙 기반 Linked List
 /***********************************************************/
 
-#if 1
+#if 0
 
 /***********************************************************/
 // [2-1.1] 기존 배열 기반 linked list 방식중 그대로 사용하는 함수들
@@ -3081,7 +3082,7 @@ int Copy_Score_Node(SCORE * head, int jumsu, SCORE * buf)
 // [2-1.2] 전달받은 데이터를 힙에 생성하고 Linked List에 추가하는 함수 (calloc 사용)
 /***********************************************************/
 
-#if 1
+#if 0
 
 int Insert_Node(SCORE * head, SCORE * d)
 {
@@ -3142,7 +3143,7 @@ void main(void)
 // [2-1.3] 전달받은 사번의 자료를 링크와 힙에서 삭제하는 함수 (free 사용)
 /***********************************************************/
 
-#if 1
+#if 0
 
 int Delete_Node(SCORE * head, int id)
 {
@@ -3164,7 +3165,7 @@ int Delete_Node(SCORE * head, int id)
 
 #endif
 
-#if 1
+#if 0
 
 void main(void)
 {
@@ -5430,3 +5431,17 @@ void main(void)
 // 완성된 위의 예제를 복사하여 처음부터 모두 재설계하라
 /***********************************************************/
 
+/***********************************************************/
+// 조세퍼스 문제풀이
+/***********************************************************/
+
+#if 1
+
+#include <stdio.h>
+
+
+
+
+
+
+#endif
