@@ -1,0 +1,49 @@
+#include <stdio.h>
+#include <string.h>
+#include <conio.h>
+#include <malloc.h>
+
+
+typedef struct _person{
+	int data;
+	struct _person* next;
+}PERSON; //링크드리스트
+
+PERSON HEAD;
+
+int CREATE_NODE(PERSON *head, PERSON *d,int Num) //링크시킬 함수 만들기
+{
+	int i;
+	for (i=0;i<Num;i++)
+	{
+		d->data = i + 1;
+		d->next = head->next;
+		head->next = d;
+	}
+	for (i = 0; i < Num; i++)
+	{
+		head = head->next;
+		printf("%d", d->data);
+	}
+		return 1;//성공
+}
+/*int POP_NODE() //순환 함수 만들기
+{ 
+
+
+}*/
+int main(void){
+	PERSON *p;
+	int a[5000];
+	int num, odr;
+	int i;
+	scanf_s("%d %d", &num, &odr); // 리스트 갯수와 순환할 숫자 입력
+
+	p = calloc(num+1, sizeof(PERSON)); // main 함수에 만들 노드 수 만큼 메모리 할당
+	printf("success : %d\n", CREATE_NODE(&HEAD, p, num));
+	
+
+	free(p);
+
+}
+
